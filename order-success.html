@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed - GURUTECH</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner flex-between">
+        <div class="flex gap-md">
+          <button class="mobile-menu-btn" aria-label="Open menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <a href="index.html" class="logo">GURU<span>TECH</span></a>
+        </div>
+
+        <nav class="nav-links">
+          <a href="products.html">All Products</a>
+          <a href="products.html?category=laptops">Laptops</a>
+          <a href="products.html?category=phones">Phones</a>
+          <a href="products.html?category=audio">Audio</a>
+          <a href="products.html?category=gaming">Gaming</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="cart.html" class="cart-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            <span class="cart-count" style="display:none">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="menu-overlay"></div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-header">
+      <span class="logo">GURU<span>TECH</span></span>
+      <button class="mobile-menu-close">&times;</button>
+    </div>
+    <a href="index.html">Home</a>
+    <a href="products.html">All Products</a>
+    <a href="products.html?category=laptops">Laptops</a>
+    <a href="products.html?category=phones">Phones</a>
+    <a href="products.html?category=audio">Audio</a>
+    <a href="products.html?category=gaming">Gaming</a>
+    <a href="cart.html">Cart</a>
+  </div>
+
+  <!-- Success Page -->
+  <main class="success-page">
+    <div class="container">
+      <div class="success-icon">✓</div>
+      <h1>Order Confirmed!</h1>
+      <p>Thank you for your purchase. Your order has been received and is being processed.</p>
+      <p>A confirmation email has been sent to your email address.</p>
+
+      <div class="order-number" id="order-number">Order #GT--------</div>
+
+      <div id="order-details" style="max-width:600px;margin:0 auto 32px;text-align:left;background:#f9f9f9;padding:24px;border-radius:4px">
+        <!-- Order details loaded via JS -->
+      </div>
+
+      <div style="display:flex;gap:16px;justify-content:center">
+        <a href="products.html" class="btn btn-primary">Continue Shopping</a>
+        <a href="index.html" class="btn btn-secondary">Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">GURUTECH</div>
+          <p class="footer-desc">Your trusted electronics destination in Kenya.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Shop</h4>
+          <a href="products.html?category=laptops">Laptops</a>
+          <a href="products.html?category=phones">Phones</a>
+          <a href="products.html?category=audio">Audio</a>
+          <a href="products.html">All Products</a>
+        </div>
+        <div class="footer-column">
+          <h4>Support</h4>
+          <a href="#">Contact Us</a>
+          <a href="#">FAQs</a>
+          <a href="#">Shipping</a>
+          <a href="#">Returns</a>
+        </div>
+        <div class="footer-column">
+          <h4>Stay Updated</h4>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); App.toast('Subscribed!', 'success');">
+            <input type="email" placeholder="Your email" required>
+            <button type="submit" class="btn btn-primary btn-sm">Join</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 GURUTECH. All rights reserved.</span>
+        <span>Nairobi, Kenya</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const order = JSON.parse(localStorage.getItem('last_order') || 'null');
+
+      if (!order) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      document.getElementById('order-number').textContent = `Order #${order.number}`;
+
+      const date = new Date(order.date);
+      const dateStr = date.toLocaleDateString('en-KE', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      document.getElementById('order-details').innerHTML = `
+        <div style="margin-bottom:16px">
+          <span style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:0.5px">Order Date</span>
+          <p style="font-weight:600;margin-top:4px">${dateStr}</p>
+        </div>
+        <div style="margin-bottom:16px">
+          <span style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:0.5px">Customer</span>
+          <p style="font-weight:600;margin-top:4px">${order.customer.name || 'N/A'}</p>
+          <p style="font-size:14px;color:#666">${order.customer.email || 'N/A'}</p>
+        </div>
+        <div style="margin-bottom:16px">
+          <span style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:0.5px">Items</span>
+          <div style="margin-top:8px">
+            ${order.items.map(item => `
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;font-size:14px">
+                <span>${item.name} × ${item.quantity}</span>
+                <span style="font-weight:600">${App.formatPrice(item.price * item.quantity)}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:16px;border-top:2px solid #111">
+          <span style="font-weight:700">Total</span>
+          <span style="font-weight:700;font-size:18px">${App.formatPrice(order.total)}</span>
+        </div>
+        <div style="margin-top:16px;padding:12px;background:#e8f5e9;border-radius:4px;font-size:13px;color:#2e7d32">
+          <strong>Payment Status:</strong> Paid via M-Pesa ✓
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>

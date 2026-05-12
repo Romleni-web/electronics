@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - GURUTECH</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner flex-between">
+        <div class="flex gap-md">
+          <button class="mobile-menu-btn" aria-label="Open menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <a href="index.html" class="logo">GURU<span>TECH</span></a>
+        </div>
+
+        <nav class="nav-links">
+          <a href="products.html">All Products</a>
+          <a href="products.html?category=laptops">Laptops</a>
+          <a href="products.html?category=phones">Phones</a>
+          <a href="products.html?category=audio">Audio</a>
+          <a href="products.html?category=gaming">Gaming</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="cart.html" class="cart-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            <span class="cart-count" style="display:none">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="menu-overlay"></div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-header">
+      <span class="logo">GURU<span>TECH</span></span>
+      <button class="mobile-menu-close">&times;</button>
+    </div>
+    <a href="index.html">Home</a>
+    <a href="products.html">All Products</a>
+    <a href="products.html?category=laptops">Laptops</a>
+    <a href="products.html?category=phones">Phones</a>
+    <a href="products.html?category=audio">Audio</a>
+    <a href="products.html?category=gaming">Gaming</a>
+    <a href="cart.html">Cart</a>
+  </div>
+
+  <!-- Checkout Page -->
+  <main class="checkout-page">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="cart.html">Cart</a>
+        <span>/</span>
+        <span>Checkout</span>
+      </div>
+
+      <h1>Checkout</h1>
+
+      <div class="checkout-layout">
+        <!-- Checkout Form -->
+        <div class="checkout-form">
+          <form id="checkout-form">
+            <!-- Contact Information -->
+            <h3>Contact Information</h3>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="your@email.com" required>
+              <span class="error-msg">Please enter a valid email</span>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="+254 712 345 678" required>
+              <span class="error-msg">Enter valid Kenyan phone (+254XXXXXXXXX)</span>
+            </div>
+
+            <!-- Shipping Address -->
+            <h3 style="margin-top:32px">Shipping Address</h3>
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" placeholder="John Doe" required>
+              <span class="error-msg">Full name is required</span>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="address">Street Address</label>
+                <input type="text" id="address" placeholder="123 Kimathi Street" required>
+                <span class="error-msg">Address is required</span>
+              </div>
+              <div class="form-group">
+                <label for="apartment">Apartment, Suite (Optional)</label>
+                <input type="text" id="apartment" placeholder="Apt 4B">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" placeholder="Nairobi" required>
+                <span class="error-msg">City is required</span>
+              </div>
+              <div class="form-group">
+                <label for="county">County</label>
+                <select id="county" required>
+                  <option value="">Select County</option>
+                  <option value="Nairobi">Nairobi</option>
+                  <option value="Mombasa">Mombasa</option>
+                  <option value="Kisumu">Kisumu</option>
+                  <option value="Nakuru">Nakuru</option>
+                  <option value="Kiambu">Kiambu</option>
+                  <option value="Kajiado">Kajiado</option>
+                  <option value="Machakos">Machakos</option>
+                  <option value="Other">Other</option>
+                </select>
+                <span class="error-msg">Please select a county</span>
+              </div>
+            </div>
+
+            <!-- Payment Method -->
+            <h3 style="margin-top:32px">Payment Method</h3>
+            <div class="payment-methods">
+              <label class="payment-method active" data-method="mpesa">
+                <input type="radio" name="payment" value="mpesa" checked>
+                <div class="payment-method-info">
+                  <h4 class="mpesa-logo">M-Pesa</h4>
+                  <p>Pay via M-Pesa STK Push</p>
+                </div>
+              </label>
+              <label class="payment-method" data-method="cod">
+                <input type="radio" name="payment" value="cod">
+                <div class="payment-method-info">
+                  <h4>Cash on Delivery</h4>
+                  <p>Pay when you receive your order</p>
+                </div>
+              </label>
+            </div>
+
+            <!-- M-Pesa STK Push Section -->
+            <div class="mpesa-section" id="mpesa-section">
+              <h4>M-Pesa Payment</h4>
+              <p>Enter the M-Pesa number to receive the STK Push. You will receive a prompt on your phone to enter your PIN.</p>
+              <div class="mpesa-input-group">
+                <div class="form-group">
+                  <label for="mpesa-phone">M-Pesa Phone Number</label>
+                  <input type="tel" id="mpesa-phone" placeholder="+254 712 345 678">
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary" id="stk-push-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+                Send M-Pesa STK Push
+              </button>
+              <div class="stk-status" id="stk-status"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg btn-full" style="margin-top:32px">
+              Place Order
+            </button>
+          </form>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary-checkout">
+          <h3>Order Summary</h3>
+          <div id="checkout-items"></div>
+          <div class="summary-row" style="margin-top:16px;padding-top:16px;border-top:1px solid #eee">
+            <span>Subtotal</span>
+            <span id="checkout-subtotal">KES 0</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span id="checkout-shipping">KES 0</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="checkout-total">KES 0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">GURUTECH</div>
+          <p class="footer-desc">Your trusted electronics destination in Kenya.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Shop</h4>
+          <a href="products.html?category=laptops">Laptops</a>
+          <a href="products.html?category=phones">Phones</a>
+          <a href="products.html?category=audio">Audio</a>
+          <a href="products.html">All Products</a>
+        </div>
+        <div class="footer-column">
+          <h4>Support</h4>
+          <a href="#">Contact Us</a>
+          <a href="#">FAQs</a>
+          <a href="#">Shipping</a>
+          <a href="#">Returns</a>
+        </div>
+        <div class="footer-column">
+          <h4>Stay Updated</h4>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); App.toast('Subscribed!', 'success');">
+            <input type="email" placeholder="Your email" required>
+            <button type="submit" class="btn btn-primary btn-sm">Join</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 GURUTECH. All rights reserved.</span>
+        <span>Nairobi, Kenya</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/checkout.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Checkout.init();
+    });
+  </script>
+</body>
+</html>

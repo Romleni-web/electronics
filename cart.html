@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart - GURUTECH</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner flex-between">
+        <div class="flex gap-md">
+          <button class="mobile-menu-btn" aria-label="Open menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <a href="index.html" class="logo">GURU<span>TECH</span></a>
+        </div>
+
+        <nav class="nav-links">
+          <a href="products.html">All Products</a>
+          <a href="products.html?category=laptops">Laptops</a>
+          <a href="products.html?category=phones">Phones</a>
+          <a href="products.html?category=audio">Audio</a>
+          <a href="products.html?category=gaming">Gaming</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="cart.html" class="cart-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            <span class="cart-count" style="display:none">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="menu-overlay"></div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-header">
+      <span class="logo">GURU<span>TECH</span></span>
+      <button class="mobile-menu-close">&times;</button>
+    </div>
+    <a href="index.html">Home</a>
+    <a href="products.html">All Products</a>
+    <a href="products.html?category=laptops">Laptops</a>
+    <a href="products.html?category=phones">Phones</a>
+    <a href="products.html?category=audio">Audio</a>
+    <a href="products.html?category=gaming">Gaming</a>
+    <a href="cart.html">Cart</a>
+  </div>
+
+  <!-- Cart Page -->
+  <main class="cart-page">
+    <div class="container">
+      <h1>Shopping Cart</h1>
+
+      <!-- Empty Cart State -->
+      <div id="empty-cart" class="empty-cart hidden">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" style="margin:0 auto 20px;display:block"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added any products yet.</p>
+        <a href="products.html" class="btn btn-primary" style="margin-top:16px">Continue Shopping</a>
+      </div>
+
+      <!-- Cart Content -->
+      <div id="cart-content" class="cart-layout">
+        <div>
+          <div class="cart-items" id="cart-items"></div>
+          <a href="products.html" style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:14px;color:#666">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Continue Shopping
+          </a>
+        </div>
+
+        <div class="cart-summary">
+          <h3>Order Summary</h3>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="cart-subtotal">KES 0</span>
+          </div>
+          <div class="summary-row">
+            <span>Shipping</span>
+            <span id="cart-shipping">KES 0</span>
+          </div>
+          <div class="summary-row" style="font-size:12px;color:#666">
+            <span>Free shipping on orders over KES 50,000</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="cart-total">KES 0</span>
+          </div>
+          <a href="checkout.html" class="btn btn-primary btn-full" style="margin-top:20px">Proceed to Checkout</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">GURUTECH</div>
+          <p class="footer-desc">Your trusted electronics destination in Kenya.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Shop</h4>
+          <a href="products.html?category=laptops">Laptops</a>
+          <a href="products.html?category=phones">Phones</a>
+          <a href="products.html?category=audio">Audio</a>
+          <a href="products.html">All Products</a>
+        </div>
+        <div class="footer-column">
+          <h4>Support</h4>
+          <a href="#">Contact Us</a>
+          <a href="#">FAQs</a>
+          <a href="#">Shipping</a>
+          <a href="#">Returns</a>
+        </div>
+        <div class="footer-column">
+          <h4>Stay Updated</h4>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); App.toast('Subscribed!', 'success');">
+            <input type="email" placeholder="Your email" required>
+            <button type="submit" class="btn btn-primary btn-sm">Join</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 GURUTECH. All rights reserved.</span>
+        <span>Nairobi, Kenya</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Cart.renderCartPage();
+    });
+  </script>
+</body>
+</html>
