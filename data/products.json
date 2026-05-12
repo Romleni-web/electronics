@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1,
+    "name": "MacBook Pro 14-inch M3",
+    "category": "laptops",
+    "brand": "Apple",
+    "price": 159900,
+    "oldPrice": 179900,
+    "stock": 12,
+    "rating": 4.8,
+    "reviews": 234,
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop",
+    "specs": {
+      "processor": "M3 Pro",
+      "ram": "18GB",
+      "storage": "512GB SSD",
+      "display": "14.2-inch Liquid Retina"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Dell XPS 15",
+    "category": "laptops",
+    "brand": "Dell",
+    "price": 145000,
+    "oldPrice": 165000,
+    "stock": 8,
+    "rating": 4.6,
+    "reviews": 189,
+    "image": "https://images.unsplash.com/photo-1593642632823-8f78536788c6?w=400&h=400&fit=crop",
+    "specs": {
+      "processor": "Intel Core i7",
+      "ram": "16GB",
+      "storage": "1TB SSD",
+      "display": "15.6-inch OLED"
+    }
+  },
+  {
+    "id": 3,
+    "name": "iPhone 15 Pro Max",
+    "category": "phones",
+    "brand": "Apple",
+    "price": 184900,
+    "oldPrice": 199900,
+    "stock": 25,
+    "rating": 4.9,
+    "reviews": 567,
+    "image": "https://images.unsplash.com/photo-1696446701796-da61225697cc?w=400&h=400&fit=crop",
+    "specs": {
+      "processor": "A17 Pro",
+      "ram": "8GB",
+      "storage": "256GB",
+      "display": "6.7-inch Super Retina"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Samsung Galaxy S24 Ultra",
+    "category": "phones",
+    "brand": "Samsung",
+    "price": 169900,
+    "oldPrice": 189900,
+    "stock": 18,
+    "rating": 4.7,
+    "reviews": 423,
+    "image": "https://images.unsplash.com/photo-1610945265078-3858a0828671?w=400&h=400&fit=crop",
+    "specs": {
+      "processor": "Snapdragon 8 Gen 3",
+      "ram": "12GB",
+      "storage": "512GB",
+      "display": "6.8-inch AMOLED"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Sony WH-1000XM5",
+    "category": "audio",
+    "brand": "Sony",
+    "price": 45900,
+    "oldPrice": 54900,
+    "stock": 30,
+    "rating": 4.8,
+    "reviews": 892,
+    "image": "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&h=400&fit=crop",
+    "specs": {
+      "type": "Over-ear",
+      "battery": "30 hours",
+      "connectivity": "Bluetooth 5.2",
+      "weight": "250g"
+    }
+  },
+  {
+    "id": 6,
+    "name": "AirPods Pro 2",
+    "category": "audio",
+    "brand": "Apple",
+    "price": 32900,
+    "oldPrice": 38900,
+    "stock": 45,
+    "rating": 4.7,
+    "reviews": 1205,
+    "image": "https://images.unsplash.com/photo-1603351154351-5cfb3d04ef30?w=400&h=400&fit=crop",
+    "specs": {
+      "type": "In-ear",
+      "battery": "6 hours",
+      "connectivity": "Bluetooth 5.3",
+      "features": "ANC, Spatial Audio"
+    }
+  },
+  {
+    "id": 7,
+    "name": "PlayStation 5",
+    "category": "gaming",
+    "brand": "Sony",
+    "price": 69900,
+    "oldPrice": 79900,
+    "stock": 5,
+    "rating": 4.9,
+    "reviews": 3456,
+    "image": "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=400&fit=crop",
+    "specs": {
+      "processor": "AMD Zen 2",
+      "ram": "16GB GDDR6",
+      "storage": "825GB SSD",
+      "resolution": "4K 120Hz"
+    }
+  },
+  {
+    "id": 8,
+    "name": "Xbox Series X",
+    "category": "gaming",
+    "brand": "Microsoft",
+    "price": 64900,
+    "oldPrice": 74900,
+    "stock": 7,
+    "rating": 4.7,
+    "reviews": 2103,
+    "image": "https://images.unsplash.com/photo-1621252179027-94459d27d3ee?w=400&h=400&fit=crop",
+    "specs": {
+      "processor": "AMD Zen 2",
+      "ram": "16GB GDDR6",
+      "storage": "1TB SSD",
+      "resolution": "4K 120Hz"
+    }
+  },
+  {
+    "id": 9,
+    "name": "iPad Pro 12.9-inch M2",
+    "category": "tablets",
+    "brand": "Apple",
+    "price": 129900,
+    "oldPrice": 149900,
+    "stock": 15,
+    "rating": 4.8,
+    "reviews": 678,
+    "image": "https://images.unsplash.com/photo-1544244015-0df4b25d5e8e?w=400&h=400&fit=crop",
+    "specs": {
+      "processor": "M2",
+      "ram": "8GB",
+      "storage": "256GB",
+      "display": "12.9-inch Liquid Retina XDR"
+    }
+  },
+  {
+    "id": 10,
+    "name": "Samsung Galaxy Tab S9 Ultra",
+    "category": "tablets",
+    "brand": "Samsung",
+    "price": 119900,
+    "oldPrice": 139900,
+    "stock": 10,
+    "rating": 4.6,
+    "reviews": 234,
+    "image": "https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?w=400&h=400&fit=crop",
+    "specs": {
+      "processor": "Snapdragon 8 Gen 2",
+      "ram": "12GB",
+      "storage": "512GB",
+      "display": "14.6-inch AMOLED"
+    }
+  },
+  {
+    "id": 11,
+    "name": "Canon EOS R6 Mark II",
+    "category": "cameras",
+    "brand": "Canon",
+    "price": 249900,
+    "oldPrice": 279900,
+    "stock": 6,
+    "rating": 4.9,
+    "reviews": 156,
+    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=400&fit=crop",
+    "specs": {
+      "sensor": "24.2MP Full-Frame",
+      "video": "4K 60fps",
+      "autofocus": "Dual Pixel CMOS",
+      "weight": "670g"
+    }
+  },
+  {
+    "id": 12,
+    "name": "Sony A7 IV",
+    "category": "cameras",
+    "brand": "Sony",
+    "price": 229900,
+    "oldPrice": 259900,
+    "stock": 9,
+    "rating": 4.8,
+    "reviews": 312,
+    "image": "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=400&fit=crop",
+    "specs": {
+      "sensor": "33MP Full-Frame",
+      "video": "4K 60fps",
+      "autofocus": "Real-time Eye AF",
+      "weight": "658g"
+    }
+  },
+  {
+    "id": 13,
+    "name": "LG 55-inch OLED C4",
+    "category": "tvs",
+    "brand": "LG",
+    "price": 189900,
+    "oldPrice": 219900,
+    "stock": 4,
+    "rating": 4.7,
+    "reviews": 445,
+    "image": "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=400&h=400&fit=crop",
+    "specs": {
+      "display": "55-inch OLED",
+      "resolution": "4K",
+      "refresh": "120Hz",
+      "hdr": "Dolby Vision"
+    }
+  },
+  {
+    "id": 14,
+    "name": "Samsung 65-inch Neo QLED",
+    "category": "tvs",
+    "brand": "Samsung",
+    "price": 219900,
+    "oldPrice": 249900,
+    "stock": 3,
+    "rating": 4.6,
+    "reviews": 289,
+    "image": "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=400&fit=crop",
+    "specs": {
+      "display": "65-inch Neo QLED",
+      "resolution": "4K",
+      "refresh": "120Hz",
+      "hdr": "HDR10+"
+    }
+  },
+  {
+    "id": 15,
+    "name": "Logitech MX Master 3S",
+    "category": "accessories",
+    "brand": "Logitech",
+    "price": 12900,
+    "oldPrice": 15900,
+    "stock": 50,
+    "rating": 4.9,
+    "reviews": 2345,
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=400&fit=crop",
+    "specs": {
+      "dpi": "8000",
+      "connectivity": "Bluetooth/2.4GHz",
+      "battery": "70 days",
+      "buttons": "7"
+    }
+  },
+  {
+    "id": 16,
+    "name": "Apple Watch Ultra 2",
+    "category": "wearables",
+    "brand": "Apple",
+    "price": 89900,
+    "oldPrice": 99900,
+    "stock": 20,
+    "rating": 4.8,
+    "reviews": 567,
+    "image": "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop",
+    "specs": {
+      "display": "49mm",
+      "battery": "36 hours",
+      "water": "100m",
+      "features": "GPS, Dive Computer"
+    }
+  }
+]

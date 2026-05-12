@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GURUTECH - Premium Electronics Store</title>
+  <meta name="description" content="GURUTECH - Your trusted electronics store in Kenya. Laptops, phones, audio, gaming, and more.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner flex-between">
+        <div class="flex gap-md">
+          <button class="mobile-menu-btn" aria-label="Open menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <a href="index.html" class="logo">GURU<span>TECH</span></a>
+        </div>
+
+        <div class="search-bar">
+          <input type="text" id="search-input" placeholder="Search products..." autocomplete="off">
+          <button id="search-btn" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+        </div>
+
+        <nav class="nav-links">
+          <a href="products.html">All Products</a>
+          <a href="products.html?category=laptops">Laptops</a>
+          <a href="products.html?category=phones">Phones</a>
+          <a href="products.html?category=audio">Audio</a>
+          <a href="products.html?category=gaming">Gaming</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="cart.html" class="cart-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            <span class="cart-count" style="display:none">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="menu-overlay"></div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-header">
+      <span class="logo">GURU<span>TECH</span></span>
+      <button class="mobile-menu-close">&times;</button>
+    </div>
+    <a href="index.html">Home</a>
+    <a href="products.html">All Products</a>
+    <a href="products.html?category=laptops">Laptops</a>
+    <a href="products.html?category=phones">Phones</a>
+    <a href="products.html?category=audio">Audio</a>
+    <a href="products.html?category=gaming">Gaming</a>
+    <a href="products.html?category=tablets">Tablets</a>
+    <a href="products.html?category=cameras">Cameras</a>
+    <a href="products.html?category=tvs">TVs</a>
+    <a href="cart.html">Cart</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Premium Tech, Delivered to Your Door</h1>
+        <p>Discover the latest electronics from top brands. Quality guaranteed with every purchase.</p>
+        <a href="products.html" class="btn btn-primary btn-lg">Shop Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories-section">
+    <div class="container">
+      <div class="section-header flex-between">
+        <h2>Shop by Category</h2>
+      </div>
+      <div class="grid grid-4" id="categories-grid">
+        <a href="products.html?category=laptops" class="category-card">
+          <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop" alt="Laptops" loading="lazy">
+          <h3>Laptops</h3>
+        </a>
+        <a href="products.html?category=phones" class="category-card">
+          <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop" alt="Phones" loading="lazy">
+          <h3>Phones</h3>
+        </a>
+        <a href="products.html?category=audio" class="category-card">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop" alt="Audio" loading="lazy">
+          <h3>Audio</h3>
+        </a>
+        <a href="products.html?category=gaming" class="category-card">
+          <img src="https://images.unsplash.com/photo-1593118247619-e2d6f056869e?w=400&h=300&fit=crop" alt="Gaming" loading="lazy">
+          <h3>Gaming</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="products-section">
+    <div class="container">
+      <div class="section-header flex-between">
+        <h2>Featured Products</h2>
+        <a href="products.html">View All →</a>
+      </div>
+      <div class="grid grid-4" id="featured-products"></div>
+    </div>
+  </section>
+
+  <!-- New Arrivals -->
+  <section class="products-section">
+    <div class="container">
+      <div class="section-header flex-between">
+        <h2>New Arrivals</h2>
+        <a href="products.html?sort=newest">View All →</a>
+      </div>
+      <div class="grid grid-4" id="new-arrivals"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">GURUTECH</div>
+          <p class="footer-desc">Your trusted electronics destination in Kenya. Quality products, competitive prices, and reliable delivery.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Shop</h4>
+          <a href="products.html?category=laptops">Laptops</a>
+          <a href="products.html?category=phones">Phones</a>
+          <a href="products.html?category=audio">Audio</a>
+          <a href="products.html?category=gaming">Gaming</a>
+          <a href="products.html">All Products</a>
+        </div>
+        <div class="footer-column">
+          <h4>Support</h4>
+          <a href="#">Contact Us</a>
+          <a href="#">FAQs</a>
+          <a href="#">Shipping Info</a>
+          <a href="#">Returns</a>
+          <a href="#">Warranty</a>
+        </div>
+        <div class="footer-column">
+          <h4>Stay Updated</h4>
+          <p class="text-sm text-gray mb-2">Subscribe for deals and new arrivals</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); App.toast('Subscribed successfully!', 'success');">
+            <input type="email" placeholder="Your email" required>
+            <button type="submit" class="btn btn-primary btn-sm">Join</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 GURUTECH. All rights reserved.</span>
+        <span>Nairobi, Kenya</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/products.js"></script>
+  <script>
+    // Initialize homepage
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        await Products.load();
+
+        // Load featured products (first 8)
+        Products.renderGrid('featured-products', Products.data.slice(0, 8));
+
+        // Load new arrivals (last 4)
+        Products.renderGrid('new-arrivals', [...Products.data].reverse().slice(0, 4));
+      } catch (err) {
+        console.error('Failed to load products:', err);
+      }
+
+      // Initialize UI elements
+      if (window.Cart && typeof Cart.updateBadge === 'function') {
+        Cart.updateBadge();
+      }
+
+      // Mobile Menu Logic
+      const menuBtn = document.querySelector('.mobile-menu-btn');
+      const menuClose = document.querySelector('.mobile-menu-close');
+      const menu = document.querySelector('.mobile-menu');
+      const overlay = document.querySelector('.menu-overlay');
+
+      const toggleMenu = (show) => {
+        if (menu) menu.classList.toggle('active', show);
+        if (overlay) overlay.classList.toggle('active', show);
+      };
+
+      if (menuBtn) menuBtn.addEventListener('click', () => toggleMenu(true));
+      if (menuClose) menuClose.addEventListener('click', () => toggleMenu(false));
+      if (overlay) overlay.addEventListener('click', () => toggleMenu(false));
+      // Search functionality
+      const searchInput = document.getElementById('search-input');
+      const searchBtn = document.getElementById('search-btn');
+
+      const doSearch = () => {
+        const query = searchInput.value.trim();
+        if (query) {
+          window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+        }
+      };
+
+      searchBtn.addEventListener('click', doSearch);
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') doSearch();
+      });
+    });
+  </script>
+</body>
+</html>
