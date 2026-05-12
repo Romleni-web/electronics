@@ -39,7 +39,7 @@
 </div>
 <div class="flex gap-md" style="align-items:center">
 <span class="admin-user" id="admin-name">...</span>
-<button class="btn btn-sm" style="background:#333;color:#fff" onclick="logout()">Logout</button>
+<button class="btn btn-sm" style="background:#333;color:#fff" id="logout-btn">Logout</button>
 </div>
 </div>
 </div>
@@ -131,13 +131,19 @@ async function logout() {
   window.location.href = 'admin-login.html';
 }
 
-function loadDashboard() {
-  const orders = JSON.parse(localStorage.getItem('gurutech_orders') || '[]');
+async function loadDashboard() {
+  let orders = [];
+  try {
+    const r = await fetch(API_BASE + '/orders');
+    const res = await r.json();
+    orders = res.data || [];
+  } catch (err) { console.error('Failed to load stats:', err); }
+
   const totalRevenue = orders.reduce((s,o) => s + o.total, 0);
   const totalItems = orders.reduce((s,o) => s + o.items.reduce((a,i) => a + i.quantity, 0), 0);
 
   document.getElementById('stat-revenue').textContent = App.formatPrice(totalRevenue);
-  document.getElementById('stat-orders').textContent = orders.length;
+  document.getElementById('stat-orders').textContent = orders.length || 0;
   document.getElementById('stat-products').textContent = totalItems;
   document.getElementById('stat-customers').textContent = new Set(orders.map(o => o.customer.email)).size;
 
@@ -168,7 +174,10 @@ function loadDashboard() {
 
 document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-checkAuth().then(() => loadDashboard());
+checkAuth().then(() => {
+  loadDashboard();
+  document.getElementById('logout-btn').addEventListener('click', logout);
+});
 </script>
 </body>
 </html>

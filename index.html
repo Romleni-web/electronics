@@ -188,36 +188,6 @@
         Cart.updateBadge();
       }
 
-      // Mobile Menu Logic
-      const menuBtn = document.querySelector('.mobile-menu-btn');
-      const menuClose = document.querySelector('.mobile-menu-close');
-      const menu = document.querySelector('.mobile-menu');
-      const overlay = document.querySelector('.menu-overlay');
-
-      const toggleMenu = (show) => {
-        if (menu) menu.classList.toggle('active', show);
-        if (overlay) overlay.classList.toggle('active', show);
-      };
-
-      if (menuBtn) menuBtn.addEventListener('click', () => toggleMenu(true));
-      if (menuClose) menuClose.addEventListener('click', () => toggleMenu(false));
-      if (overlay) overlay.addEventListener('click', () => toggleMenu(false));
-      // Search functionality
-      const searchInput = document.getElementById('search-input');
-      const searchBtn = document.getElementById('search-btn');
-
-      const doSearch = () => {
-        const query = searchInput.value.trim();
-        if (query) {
-          window.location.href = `products.html?search=${encodeURIComponent(query)}`;
-        }
-      };
-
-      searchBtn.addEventListener('click', doSearch);
-      searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') doSearch();
-      });
-
       const newsletterForm = document.getElementById('newsletter-form');
       if (newsletterForm) {
         newsletterForm.addEventListener('submit', (e) => {

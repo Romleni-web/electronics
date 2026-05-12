@@ -40,7 +40,7 @@
 </div>
 <div class="flex gap-md" style="align-items:center">
 <span class="admin-user" id="admin-name">...</span>
-<button class="btn btn-sm" style="background:#333;color:#fff" onclick="logout()">Logout</button>
+<button class="btn btn-sm" style="background:#333;color:#fff" id="logout-btn">Logout</button>
 </div>
 </div>
 </div>
@@ -110,8 +110,14 @@ async function logout() {
   window.location.href = 'admin-login.html';
 }
 
-function loadCustomers() {
-  const orders = JSON.parse(localStorage.getItem('gurutech_orders') || '[]');
+async function loadCustomers() {
+  let orders = [];
+  try {
+    const r = await fetch(API_BASE + '/orders');
+    const res = await r.json();
+    orders = res.data || [];
+  } catch (err) { console.error('Error fetching customers:', err); }
+
   const customers = {};
   orders.forEach(order => {
     const email = order.customer.email || 'unknown';
@@ -149,7 +155,10 @@ function renderTable(customers) {
 
 document.getElementById('customer-search').addEventListener('input', () => loadCustomers());
 
-checkAuth().then(() => loadCustomers());
+checkAuth().then(() => {
+  loadCustomers();
+  document.getElementById('logout-btn').addEventListener('click', logout);
+});
 </script>
 </body>
 </html>

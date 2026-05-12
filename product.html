@@ -153,20 +153,6 @@
       // Render related products
       const related = Products.getRelated(product);
       document.getElementById('related-products').innerHTML = related.map(p => Products.renderCard(p)).join('');
-
-      // Search functionality
-      const searchInput = document.getElementById('search-input');
-      const searchBtn = document.getElementById('search-btn');
-
-      const doSearch = () => {
-        const query = searchInput.value.trim();
-        if (query) window.location.href = `products.html?search=${encodeURIComponent(query)}`;
-      };
-
-      searchBtn.addEventListener('click', doSearch);
-      searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') doSearch();
-      });
     });
 
     function renderProductDetail(product) {

@@ -73,6 +73,25 @@ const App = {
     overlay?.addEventListener('click', close);
   },
 
+  // Unified search functionality
+  initSearch() {
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    if (!searchInput || !searchBtn) return;
+
+    const doSearch = () => {
+      const query = searchInput.value.trim();
+      if (query) {
+        window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+      }
+    };
+
+    searchBtn.addEventListener('click', doSearch);
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') doSearch();
+    });
+  },
+
   // Update cart count in header — guarded so it's safe even if cart.js isn't loaded yet
   updateCartCount() {
     if (typeof Cart === 'undefined') return;
@@ -95,6 +114,7 @@ const App = {
   // Initialize on page load
   init() {
     this.initMobileMenu();
+    this.initSearch();
     this.updateCartCount();
     this.setActiveNav();
   }

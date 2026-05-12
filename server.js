@@ -61,6 +61,17 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/mpesa', mpesaRoutes);
 app.use('/api/admin', adminRoutes);
 
+// Order status update endpoint
+app.put('/api/orders/:id/status', async (req, res) => {
+  try {
+    const { status } = req.body;
+    const Order = mongoose.model('Order');
+    const order = await Order.findByIdAndUpdate(req.params.id, { status }, { new: true });
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+    res.json({ success: true, data: order });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // Init default admin
 const { initDefaultAdmin } = require('./routes/auth');
 initDefaultAdmin().catch(console.error);
