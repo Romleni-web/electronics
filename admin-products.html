@@ -154,6 +154,7 @@ Customers
 <script>
 const API_BASE = window.location.origin + '/api';
 let allProducts = [];
+let currentEditId = null;
 
 async function checkAuth() {
   try {
@@ -171,10 +172,9 @@ async function logout() {
 
 async function loadProducts() {
   try {
-    const r = await fetch('data/products.json');
-    allProducts = await r.json();
-    const local = JSON.parse(localStorage.getItem('gurutech_products') || '[]');
-    if (local.length) allProducts = allProducts.concat(local);
+    const r = await fetch(API_BASE + '/products');
+    const res = await r.json();
+    allProducts = res.data || [];
     renderProducts();
   } catch(err) { console.error('Failed to load:', err); }
 }
@@ -193,37 +193,68 @@ function renderProducts() {
 
 function openProductModal() {
   document.getElementById('modal-title').textContent = 'Add Product';
+  currentEditId = null;
   document.getElementById('product-form').reset();
   document.getElementById('product-modal').classList.add('active');
 }
 function closeProductModal() { document.getElementById('product-modal').classList.remove('active'); }
 
-function saveProduct() {
+async function saveProduct() {
   const name = document.getElementById('prod-name').value;
   const category = document.getElementById('prod-category').value;
   const brand = document.getElementById('prod-brand').value;
   const price = parseInt(document.getElementById('prod-price').value);
   const stock = parseInt(document.getElementById('prod-stock').value);
+  const oldPrice = parseInt(document.getElementById('prod-old-price').value) || null;
+  const image = document.getElementById('prod-image').value || 'https://via.placeholder.com/400';
+  let specs = {};
+  
+  try {
+    specs = JSON.parse(document.getElementById('prod-specs').value || '{}');
+  } catch (e) {
+    alert('Invalid JSON in Specifications');
+    return;
+  }
+
   if (!name || !category || !brand || !price || isNaN(stock)) { alert('Fill all required fields'); return; }
-  const newProduct = {
-    id: Date.now(), name, category, brand, price, stock,
-    oldPrice: parseInt(document.getElementById('prod-old-price').value) || null,
-    image: document.getElementById('prod-image').value || 'https://via.placeholder.com/400',
-    rating: 0, reviews: 0,
-    specs: JSON.parse(document.getElementById('prod-specs').value || '{}')
-  };
-  const local = JSON.parse(localStorage.getItem('gurutech_products') || '[]');
-  local.push(newProduct);
-  localStorage.setItem('gurutech_products', JSON.stringify(local));
-  allProducts.push(newProduct);
-  renderProducts();
-  closeProductModal();
-  App.toast('Product added', 'success');
+  
+  const productData = { name, category, brand, price, stock, oldPrice, image, specs };
+  const url = currentEditId ? `${API_BASE}/products/${currentEditId}` : `${API_BASE}/products`;
+  const method = currentEditId ? 'PUT' : 'POST';
+
+  try {
+    const r = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(productData)
+    });
+    
+    if (!r.ok) throw new Error('Failed to save');
+    
+    App.toast(currentEditId ? 'Product updated' : 'Product added', 'success');
+    closeProductModal();
+    loadProducts();
+  } catch (err) {
+    App.toast('Error saving product', 'error');
+  }
+}
+
+async function deleteProduct(id) {
+  if (!confirm('Delete this product?')) return;
+  try {
+    const r = await fetch(`${API_BASE}/products/${id}`, { method: 'DELETE' });
+    if (!r.ok) throw new Error('Delete failed');
+    App.toast('Product deleted', 'success');
+    loadProducts();
+  } catch (err) {
+    App.toast('Error deleting product', 'error');
+  }
 }
 
 function editProduct(id) {
-  const p = allProducts.find(x => x.id === id);
+  const p = allProducts.find(x => x._id === id || x.id === id);
   if (!p) return;
+  currentEditId = p._id || p.id;
   document.getElementById('modal-title').textContent = 'Edit Product';
   document.getElementById('prod-name').value = p.name;
   document.getElementById('prod-category').value = p.category;
@@ -234,16 +265,6 @@ function editProduct(id) {
   document.getElementById('prod-image').value = p.image;
   document.getElementById('prod-specs').value = JSON.stringify(p.specs || {});
   document.getElementById('product-modal').classList.add('active');
-}
-
-function deleteProduct(id) {
-  if (!confirm('Delete this product?')) return;
-  let local = JSON.parse(localStorage.getItem('gurutech_products') || '[]');
-  local = local.filter(p => p.id !== id);
-  localStorage.setItem('gurutech_products', JSON.stringify(local));
-  allProducts = allProducts.filter(p => p.id !== id);
-  renderProducts();
-  App.toast('Product deleted', 'success');
 }
 
 document.getElementById('product-search').addEventListener('input', renderProducts);
