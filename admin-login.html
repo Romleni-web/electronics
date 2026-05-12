@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Login - GURUTECH</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/admin.css">
+<style>
+.login-box{max-width:400px;margin:80px auto;padding:40px;background:#fff;border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,0.1)}
+.login-box .logo{text-align:center;margin-bottom:32px;font-size:28px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:#333;text-transform:uppercase;letter-spacing:0.5px}
+.form-group input{width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:6px;font-size:15px;transition:border-color 0.2s}
+.form-group input:focus{outline:none;border-color:#111}
+.form-group input.error{border-color:#c00;background:#fff5f5}
+.error-text{color:#c00;font-size:13px;margin-top:6px;display:none}
+.error-text.show{display:block}
+.btn-full{width:100%;padding:14px;font-size:16px}
+.login-status{margin-top:16px;padding:12px;border-radius:6px;font-size:14px;display:none}
+.login-status.show{display:block}
+.login-status.error{background:#ffebee;color:#c00}
+.login-status.success{background:#e8f5e9;color:#2e7d32}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body class="admin-login">
+
+<div class="login-box">
+<div class="logo">GURU<span>TECH</span></div>
+<h2 style="text-align:center;margin-bottom:8px;font-size:20px">Admin Dashboard</h2>
+<p style="text-align:center;color:#666;font-size:14px;margin-bottom:28px">Secure access only</p>
+
+<form id="login-form">
+<div class="form-group">
+<label for="admin-email">Email</label>
+<input type="email" id="admin-email" placeholder="admin@gurutech.co.ke" required autocomplete="email">
+</div>
+<div class="form-group">
+<label for="admin-password">Password</label>
+<input type="password" id="admin-password" placeholder="Enter password" required autocomplete="current-password">
+</div>
+<button type="submit" class="btn btn-primary btn-full" id="login-btn">Sign In</button>
+<div class="login-status" id="login-status"></div>
+</form>
+</div>
+
+<script>
+const API_BASE = window.location.origin + '/api';
+
+// Redirect if already logged in
+checkSession();
+
+async function checkSession() {
+  try {
+    const r = await fetch(API_BASE + '/auth/admin/me', { credentials: 'include' });
+    if (r.ok) window.location.href = 'admin-dashboard.html';
+  } catch(e) {}
+}
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('login-btn');
+  const status = document.getElementById('login-status');
+  const email = document.getElementById('admin-email').value.trim();
+  const password = document.getElementById('admin-password').value;
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Signing in...';
+  status.className = 'login-status';
+
+  try {
+    const r = await fetch(API_BASE + '/auth/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await r.json();
+
+    if (r.ok && data.success) {
+      status.className = 'login-status success show';
+      status.textContent = 'Login successful! Redirecting...';
+      setTimeout(() => window.location.href = 'admin-dashboard.html', 500);
+    } else {
+      status.className = 'login-status error show';
+      status.textContent = data.error || 'Login failed';
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+    }
+  } catch (err) {
+    status.className = 'login-status error show';
+    status.textContent = 'Network error. Please try again.';
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  }
+});
+</script>
+</body>
+</html>
