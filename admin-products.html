@@ -109,9 +109,15 @@ Customers
 </div>
 <div class="admin-modal-body">
 <form id="product-form">
-<div class="form-group">
-<label>Product Name</label>
-<input type="text" id="prod-name" required>
+<div class="form-row">
+  <div class="form-group">
+    <label>Product Name</label>
+    <input type="text" id="prod-name" required>
+  </div>
+  <div class="form-group">
+    <label>SKU / Product Code</label>
+    <input type="text" id="prod-sku">
+  </div>
 </div>
 <div class="form-row-3">
 <div class="form-group">
@@ -149,12 +155,19 @@ Customers
 </div>
 </div>
 <div class="form-group">
-<label>Image URL</label>
-<input type="url" id="prod-image" placeholder="https://...">
+<label>Image Upload</label>
+<input type="file" id="prod-image-file" accept="image/*">
+<input type="hidden" id="prod-image-data">
+<div id="image-preview" style="margin-top:10px"></div>
 </div>
 <div class="form-group">
-<label>Specifications (JSON format)</label>
-<textarea id="prod-specs" rows="3" placeholder='{"processor":"M3","ram":"8GB"}'></textarea>
+<label>Short Description</label>
+<textarea id="prod-short-desc" rows="2" placeholder="Brief summary for product cards..."></textarea>
+</div>
+<div class="form-group">
+<label>Specifications</label>
+<div id="specs-container"></div>
+<button type="button" class="btn btn-sm btn-secondary" id="add-spec-btn" style="margin-top:8px">+ Add Specification</button>
 </div>
 </form>
 </div>
@@ -202,7 +215,7 @@ function renderProducts() {
   if (cat) filtered = filtered.filter(p => p.category === cat);
   document.getElementById('products-table').innerHTML = filtered.map(p => {
     const stockClass = p.stock > 10 ? 'in-stock' : p.stock > 0 ? 'low-stock' : 'out-of-stock';
-    return '<tr><td style="display:flex;align-items:center;gap:12px"><img src="' + p.image + '" alt="' + p.name + '" class="product-admin-img"><span style="font-weight:600">' + p.name + '</span></td><td>' + p.category.charAt(0).toUpperCase() + p.category.slice(1) + '</td><td>' + p.brand + '</td><td style="font-weight:700">' + App.formatPrice(p.price) + '</td><td><span class="stock-status ' + stockClass + '">' + p.stock + '</span></td><td>' + p.rating + ' ★</td><td><button class="btn btn-sm btn-secondary edit-btn" data-id="' + p.id + '">Edit</button><button class="btn btn-sm delete-btn" style="background:#ffebee;color:#c62828;margin-left:4px" data-id="' + p.id + '">Delete</button></td></tr>';
+    return '<tr><td style="display:flex;align-items:center;gap:12px"><img src="' + (p.image || 'https://via.placeholder.com/48') + '" alt="' + p.name + '" class="product-admin-img"><span style="font-weight:600">' + p.name + '</span></td><td>' + p.category.charAt(0).toUpperCase() + p.category.slice(1) + '</td><td>' + p.brand + '</td><td style="font-weight:700">' + App.formatPrice(p.price) + '</td><td><span class="stock-status ' + stockClass + '">' + p.stock + '</span></td><td>' + (p.rating || 0) + ' ★</td><td><button class="btn btn-sm btn-secondary edit-btn" data-id="' + (p._id || p.id) + '">Edit</button><button class="btn btn-sm delete-btn" style="background:#ffebee;color:#c62828;margin-left:4px" data-id="' + (p._id || p.id) + '">Delete</button></td></tr>';
   }).join('') || '<tr><td colspan="7" style="text-align:center;color:#666;padding:40px">No products found</td></tr>';
 }
 
@@ -212,52 +225,85 @@ function initEventHandlers() {
   document.getElementById('modal-close-btn').addEventListener('click', closeProductModal);
   document.getElementById('cancel-btn').addEventListener('click', closeProductModal);
   document.getElementById('save-product-btn').addEventListener('click', saveProduct);
+  document.getElementById('add-spec-btn').addEventListener('click', () => addSpecRow());
   
+  // Image upload handling
+  document.getElementById('prod-image-file').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      document.getElementById('prod-image-data').value = ev.target.result;
+      document.getElementById('image-preview').innerHTML = `<img src="${ev.target.result}" style="height:80px;border-radius:4px;border:1px solid #eee">`;
+    };
+    reader.readAsDataURL(file);
+  });
+
   // Event delegation for table buttons
   document.getElementById('products-table').addEventListener('click', (e) => {
     const editBtn = e.target.closest('.edit-btn');
     const deleteBtn = e.target.closest('.delete-btn');
     
     if (editBtn) {
-      const id = parseInt(editBtn.getAttribute('data-id'));
-      editProduct(id);
+      editProduct(editBtn.getAttribute('data-id'));
     }
     
     if (deleteBtn) {
-      const id = parseInt(deleteBtn.getAttribute('data-id'));
-      deleteProduct(id);
+      deleteProduct(deleteBtn.getAttribute('data-id'));
     }
   });
+}
+
+function addSpecRow(key = '', val = '') {
+  const container = document.getElementById('specs-container');
+  const div = document.createElement('div');
+  div.className = 'form-row spec-row';
+  div.style.marginBottom = '8px';
+  div.style.display = 'flex';
+  div.style.gap = '8px';
+  
+  div.innerHTML = `
+    <input type="text" class="spec-key" placeholder="Property" value="${key}" style="flex:1">
+    <input type="text" class="spec-val" placeholder="Value" value="${val}" style="flex:1">
+    <button type="button" class="btn btn-sm remove-spec" style="background:#f5f5f5">×</button>
+  `;
+  
+  div.querySelector('.remove-spec').addEventListener('click', () => div.remove());
+  container.appendChild(div);
 }
 
 function openProductModal() {
   document.getElementById('modal-title').textContent = 'Add Product';
   currentEditId = null;
   document.getElementById('product-form').reset();
+  document.getElementById('specs-container').innerHTML = '';
+  document.getElementById('image-preview').innerHTML = '';
+  document.getElementById('prod-image-data').value = '';
   document.getElementById('product-modal').classList.add('active');
 }
 function closeProductModal() { document.getElementById('product-modal').classList.remove('active'); }
 
 async function saveProduct() {
   const name = document.getElementById('prod-name').value;
+  const sku = document.getElementById('prod-sku').value;
   const category = document.getElementById('prod-category').value;
   const brand = document.getElementById('prod-brand').value;
   const price = parseInt(document.getElementById('prod-price').value);
   const stock = parseInt(document.getElementById('prod-stock').value);
   const oldPrice = parseInt(document.getElementById('prod-old-price').value) || null;
-  const image = document.getElementById('prod-image').value || 'https://via.placeholder.com/400';
-  let specs = {};
-  
-  try {
-    specs = JSON.parse(document.getElementById('prod-specs').value || '{}');
-  } catch (e) {
-    alert('Invalid JSON in Specifications');
-    return;
-  }
+  const image = document.getElementById('prod-image-data').value || 'https://via.placeholder.com/400';
+  const shortDesc = document.getElementById('prod-short-desc').value;
+
+  const specs = {};
+  document.querySelectorAll('.spec-row').forEach(row => {
+    const k = row.querySelector('.spec-key').value.trim();
+    const v = row.querySelector('.spec-val').value.trim();
+    if (k) specs[k] = v;
+  });
 
   if (!name || !category || !brand || !price || isNaN(stock)) { alert('Fill all required fields'); return; }
   
-  const productData = { name, category, brand, price, stock, oldPrice, image, specs };
+  const productData = { name, sku, category, brand, price, stock, oldPrice, image, specs, shortDesc };
   const url = currentEditId ? `${API_BASE}/products/${currentEditId}` : `${API_BASE}/products`;
   const method = currentEditId ? 'PUT' : 'POST';
 
@@ -296,13 +342,21 @@ function editProduct(id) {
   currentEditId = p._id || p.id;
   document.getElementById('modal-title').textContent = 'Edit Product';
   document.getElementById('prod-name').value = p.name;
+  document.getElementById('prod-sku').value = p.sku || '';
   document.getElementById('prod-category').value = p.category;
   document.getElementById('prod-brand').value = p.brand;
   document.getElementById('prod-price').value = p.price;
   document.getElementById('prod-stock').value = p.stock;
   document.getElementById('prod-old-price').value = p.oldPrice || '';
-  document.getElementById('prod-image').value = p.image;
-  document.getElementById('prod-specs').value = JSON.stringify(p.specs || {});
+  document.getElementById('prod-image-data').value = p.image || '';
+  document.getElementById('prod-short-desc').value = p.shortDesc || '';
+  document.getElementById('image-preview').innerHTML = p.image ? `<img src="${p.image}" style="height:80px;border-radius:4px;border:1px solid #eee">` : '';
+
+  document.getElementById('specs-container').innerHTML = '';
+  if (p.specs) {
+    Object.entries(p.specs).forEach(([k, v]) => addSpecRow(k, v));
+  }
+
   document.getElementById('product-modal').classList.add('active');
 }
 
