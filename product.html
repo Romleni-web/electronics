@@ -206,9 +206,9 @@
           <div class="stock-status ${stockClass}" style="font-size:14px;margin-bottom:16px">${stockText}</div>
 
           <div class="quantity-selector">
-            <button onclick="updateQty(-1)">−</button>
+            <button id="qty-minus">−</button>
             <input type="number" id="qty-input" value="1" min="1" max="${product.stock}" readonly>
-            <button onclick="updateQty(1)">+</button>
+            <button id="qty-plus">+</button>
           </div>
 
           <div class="product-actions">
@@ -241,6 +241,9 @@
         Cart.add(product, qty);
         window.location.href = 'checkout.html';
       });
+
+      document.getElementById('qty-minus').addEventListener('click', () => updateQty(-1));
+      document.getElementById('qty-plus').addEventListener('click', () => updateQty(1));
     }
 
     function updateQty(change) {

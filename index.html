@@ -151,7 +151,7 @@
         <div class="footer-column">
           <h4>Stay Updated</h4>
           <p class="text-sm text-gray mb-2">Subscribe for deals and new arrivals</p>
-          <form class="newsletter-form" onsubmit="event.preventDefault(); App.toast('Subscribed successfully!', 'success');">
+          <form class="newsletter-form" id="newsletter-form">
             <input type="email" placeholder="Your email" required>
             <button type="submit" class="btn btn-primary btn-sm">Join</button>
           </form>
@@ -217,6 +217,15 @@
       searchInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') doSearch();
       });
+
+      const newsletterForm = document.getElementById('newsletter-form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          App.toast('Subscribed successfully!', 'success');
+          newsletterForm.reset();
+        });
+      }
     });
   </script>
 </body>
