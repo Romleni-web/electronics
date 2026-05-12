@@ -397,11 +397,40 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
+  .admin-nav, .admin-user {
+    display: none;
+  }
   .admin-layout {
     grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
   .admin-sidebar {
-    display: none;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+  }
+  .sidebar-section {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 0 16px;
+    margin-bottom: 0;
+    scrollbar-width: none;
+  }
+  .sidebar-section::-webkit-scrollbar { display: none; }
+  .sidebar-title { display: none; }
+  .sidebar-link {
+    margin-bottom: 0;
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .sidebar-link svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
   }
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -414,6 +443,14 @@
 @media (max-width: 768px) {
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+  .page-header, .flex-between:not(.admin-header-inner) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  #product-search, #order-search, #status-filter, #customer-search {
+    width: 100% !important;
   }
   .admin-main {
     padding: 16px;
