@@ -4,7 +4,12 @@ const Cart = {
   add(product, quantity = 1) {
     const id = product._id || product.id;
     const existing = this.items.find(i => i.id === id);
+    
     if (existing) {
+      if (existing.quantity + quantity > (product.stock || 999)) {
+        App.toast('Cannot add more. Only ' + product.stock + ' in stock.', 'error');
+        return;
+      }
       existing.quantity += quantity;
     } else {
       this.items.push({ id, name: product.name, brand: product.brand, price: product.price, image: product.image, quantity, stock: product.stock });
