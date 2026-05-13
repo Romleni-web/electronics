@@ -111,12 +111,24 @@ const App = {
     });
   },
 
+  // Initialize newsletter form submission
+  initNewsletterForm() {
+    const form = document.querySelector('.newsletter-form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        App.toast('Subscribed!', 'success');
+      });
+    }
+  },
+
   // Initialize on page load
   init() {
     this.initMobileMenu();
     this.initSearch();
     this.updateCartCount();
     this.setActiveNav();
+    this.initNewsletterForm();
   }
 };
 

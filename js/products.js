@@ -63,8 +63,8 @@ const Products = {
     const discount = product.oldPrice ? Math.round((1 - product.price / product.oldPrice) * 100) : 0;
     const stockClass = product.stock > 10 ? 'in-stock' : product.stock > 0 ? 'low-stock' : 'out-of-stock';
     const stockText = product.stock > 10 ? 'In Stock' : product.stock > 0 ? 'Only ' + product.stock + ' left' : 'Out of Stock';
-    const id = product._id || product.id;
-    return '<div class="product-card"><div class="product-card-img">' + (discount > 0 ? '<span class="product-badge">-' + discount + '%</span>' : '') + '<a href="product.html?id=' + id + '"><img src="' + product.image + '" alt="' + product.name + '" loading="lazy"></a></div><div class="product-card-body"><div class="product-brand">' + product.brand + '</div><a href="product.html?id=' + id + '" class="product-name">' + product.name + '</a><div class="product-rating"><span class="stars">' + App.renderStars(product.rating) + '</span><span class="review-count">(' + product.reviews + ')</span></div><div class="product-price"><span class="price-current">' + App.formatPrice(product.price) + '</span>' + (product.oldPrice ? '<span class="price-old">' + App.formatPrice(product.oldPrice) + '</span>' : '') + '</div><div class="stock-status ' + stockClass + '">' + stockText + '</div><button class="btn btn-primary btn-sm" onclick="Cart.add(' + JSON.stringify(product).replace(/"/g, '&quot;') + ')" ' + (product.stock === 0 ? 'disabled' : '') + '>' + (product.stock === 0 ? 'Out of Stock' : 'Add to Cart') + '</button></div></div>';
+    const productId = product._id || product.id;
+    return `<div class="product-card"><div class="product-card-img">${discount > 0 ? '<span class="product-badge">-' + discount + '%</span>' : ''}<a href="product.html?id=${productId}"><img src="${product.image}" alt="${product.name}" loading="lazy"></a></div><div class="product-card-body"><div class="product-brand">${product.brand}</div><a href="product.html?id=${productId}" class="product-name">${product.name}</a><div class="product-rating"><span class="stars">${App.renderStars(product.rating)}</span><span class="review-count">(${product.reviews})</span></div><div class="product-price"><span class="price-current">${App.formatPrice(product.price)}</span>${product.oldPrice ? '<span class="price-old">' + App.formatPrice(product.oldPrice) + '</span>' : ''}</div><div class="stock-status ${stockClass}">${stockText}</div><button class="btn btn-primary btn-sm add-to-cart-btn" data-product-id="${productId}" ${product.stock === 0 ? 'disabled' : ''}>${product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</button></div></div>`;
   },
 
   renderGrid(containerId, products) {
@@ -73,4 +73,23 @@ const Products = {
     if (!products?.length) { container.innerHTML = '<p style="color:#666;padding:20px">No products.</p>'; return; }
     container.innerHTML = products.map(p => this.renderCard(p)).join('');
   }
+};
+
+// New method to initialize event listeners for add to cart buttons
+// This function should be called by the page scripts (e.g., index.html, products.html)
+// after products have been loaded and rendered.
+Products.initAddToCartListeners = function() {
+  // Use event delegation on a common parent, e.g., document.body
+  document.body.addEventListener('click', async (e) => {
+    const target = e.target;
+    if (target.classList.contains('add-to-cart-btn')) {
+      const productId = target.dataset.productId;
+      const product = Products.getById(productId); // Use Products.getById
+      if (product) {
+        Cart.add(product);
+      } else {
+        App.toast('Product not found!', 'error');
+      }
+    }
+  });
 };

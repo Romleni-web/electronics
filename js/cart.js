@@ -4,10 +4,10 @@ const Cart = {
   add(product, quantity = 1) {
     const id = product._id || product.id;
     const existing = this.items.find(i => i.id === id);
-    
+
     if (existing) {
       if (existing.quantity + quantity > (product.stock || 999)) {
-        App.toast('Cannot add more. Only ' + product.stock + ' in stock.', 'error');
+        App.toast('Cannot add more. Only ' + (product.stock || 999) + ' in stock.', 'error');
         return;
       }
       existing.quantity += quantity;
@@ -60,7 +60,7 @@ const Cart = {
     }
     if (empty) empty.classList.add('hidden');
     if (content) content.classList.remove('hidden');
-    container.innerHTML = this.items.map(i => '<div class="cart-item" data-id="' + i.id + '"><img src="' + i.image + '" alt="' + i.name + '" loading="lazy"><div class="cart-item-info"><h4>' + i.name + '</h4><p>' + i.brand + '</p></div><div class="cart-item-qty"><button onclick="Cart.updateQty(\'' + i.id + '\', ' + (i.quantity - 1) + ')">-</button><span>' + i.quantity + '</span><button onclick="Cart.updateQty(\'' + i.id + '\', ' + (i.quantity + 1) + ')">+</button></div><div class="cart-item-price">' + App.formatPrice(i.price * i.quantity) + '</div><button class="remove-btn" onclick="Cart.remove(\'' + i.id + '\')" aria-label="Remove">x</button></div>').join('');
+    container.innerHTML = this.items.map(i => `<div class="cart-item" data-id="${i.id}"><img src="${i.image}" alt="${i.name}" loading="lazy"><div class="cart-item-info"><h4>${i.name}</h4><p>${i.brand}</p></div><div class="cart-item-qty"><button class="qty-minus" data-id="${i.id}">-</button><span>${i.quantity}</span><button class="qty-plus" data-id="${i.id}">+</button></div><div class="cart-item-price">${App.formatPrice(i.price * i.quantity)}</div><button class="remove-btn" data-id="${i.id}" aria-label="Remove">x</button></div>`).join('');
     const subtotal = this.getTotal();
     const shipping = this.getShipping();
     const total = subtotal + shipping;
@@ -73,4 +73,27 @@ const Cart = {
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => App.updateCartCount());
+// Initialize cart functionality and attach event listeners once DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  App.updateCartCount();
+
+  const cartItemsContainer = document.getElementById('cart-items');
+  if (cartItemsContainer) {
+    cartItemsContainer.addEventListener('click', (e) => {
+      const target = e.target;
+      const id = target.dataset.id;
+
+      if (!id) return;
+
+      if (target.classList.contains('qty-minus')) {
+        const item = Cart.items.find(i => i.id === id); // Find item from Cart.items
+        if (item) Cart.updateQty(id, item.quantity - 1);
+      } else if (target.classList.contains('qty-plus')) {
+        const item = Cart.items.find(i => i.id === id); // Find item from Cart.items
+        if (item) Cart.updateQty(id, item.quantity + 1);
+      } else if (target.classList.contains('remove-btn')) {
+        Cart.remove(id);
+      }
+    });
+  }
+});
