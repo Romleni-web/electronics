@@ -179,22 +179,16 @@
 
         // Load new arrivals (last 4)
         Products.renderGrid('new-arrivals', [...Products.data].reverse().slice(0, 4));
+
+        // Initialize click listeners for "Add to Cart" buttons in the grids
+        Products.initAddToCartListeners();
       } catch (err) {
         console.error('Failed to load products:', err);
       }
 
       // Initialize UI elements
-      if (window.Cart && typeof Cart.updateBadge === 'function') {
-        Cart.updateBadge();
-      }
-
-      const newsletterForm = document.getElementById('newsletter-form');
-      if (newsletterForm) {
-        newsletterForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          App.toast('Subscribed successfully!', 'success');
-          newsletterForm.reset();
-        });
+      if (typeof App !== 'undefined' && typeof App.updateCartCount === 'function') {
+        App.updateCartCount();
       }
     });
   </script>

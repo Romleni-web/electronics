@@ -103,6 +103,19 @@ router.post('/products/bulk-update', verifyAdmin, requireRole('superadmin'), asy
   res.json({ success: true, updated: results.filter(Boolean).length });
 });
 
+router.put('/orders/:id/status', verifyAdmin, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const order = await Order.findByIdAndUpdate(req.params.id, { status, updatedAt: new Date() }, { new: true });
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+
+    // Ensure customer is notified of the status change
+    await sendStatusEmail(order, status);
+
+    res.json({ success: true, data: order });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 router.post('/orders/bulk-status', verifyAdmin, async (req, res) => {
   const { orderNumbers, status } = req.body;
   if (!Array.isArray(orderNumbers) || !status) return res.status(400).json({ success: false, error: 'orderNumbers and status required' });
