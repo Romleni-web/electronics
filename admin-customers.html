@@ -112,12 +112,14 @@ async function loadCustomers() {
         phone: order.customer.phone || 'N/A',
         orders: 0,
         total: 0,
-        lastOrder: order.date
+        lastOrder: order.date || order.createdAt
       };
     }
     customers[email].orders++;
     customers[email].total += order.total;
-    if (new Date(order.date) > new Date(customers[email].lastOrder)) customers[email].lastOrder = order.date;
+    const orderDate = new Date(order.date || order.createdAt);
+    const lastOrderDate = new Date(customers[email].lastOrder);
+    if (orderDate > lastOrderDate) customers[email].lastOrder = order.date || order.createdAt;
   });
   const list = Object.values(customers);
   document.getElementById('total-customers').textContent = list.length;

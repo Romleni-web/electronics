@@ -124,7 +124,7 @@
 
       document.getElementById('order-number').textContent = `Order #${order.number}`;
 
-      const date = new Date(order.date);
+      const date = new Date(order.date || order.createdAt);
       const dateStr = date.toLocaleDateString('en-KE', { 
         weekday: 'long', 
         year: 'numeric', 

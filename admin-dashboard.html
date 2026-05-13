@@ -152,7 +152,7 @@ async function loadDashboard() {
   const recent = [...orders].reverse().slice(0,10);
   document.getElementById('recent-orders').innerHTML = recent.map(o => `
     <tr><td><strong>#${o.number}</strong></td><td>${o.customer.name||'N/A'}</td>
-    <td>${new Date(o.date).toLocaleDateString('en-KE')}</td><td>${o.items.length} item${o.items.length>1?'s':''}</td>
+    <td>${new Date(o.date || o.createdAt).toLocaleDateString('en-KE')}</td><td>${o.items.length} item${o.items.length>1?'s':''}</td>
     <td>${App.formatPrice(o.total)}</td><td><span class="status-badge ${classes[o.status||'completed']}">${labels[o.status||'completed']}</span></td></tr>
   `).join('') || '<tr><td colspan="6" style="text-align:center;color:#666;padding:40px">No orders yet</td></tr>';
 }

@@ -177,7 +177,7 @@ function viewOrder(number) {
   const order = allOrders.find(o => o.number === number);
   if (!order) return;
   currentViewingOrderId = order._id || order.id;
-  const date = new Date(order.date);
+  const date = new Date(order.date || order.createdAt);
   const status = order.status || 'completed';
   document.getElementById('modal-order-number').textContent = '#' + order.number;
   document.getElementById('modal-body').innerHTML = `
