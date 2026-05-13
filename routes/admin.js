@@ -2,6 +2,33 @@ const express = require('express');
 const router = express.Router();
 const { Order, Product } = require('../models');
 const { verifyAdmin, requireRole } = require('./auth');
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
+
+async function sendStatusEmail(order, status) {
+  try {
+    await transporter.sendMail({
+      from: `"GURUTECH Support" <${process.env.SMTP_USER}>`,
+      to: order.customer.email,
+      subject: `Order #${order.number} Status Update`,
+      html: `
+        <h2>Order Status Update</h2>
+        <p>Hello ${order.customer.name},</p>
+        <p>The status of your order <strong>#${order.number}</strong> has been updated to: <strong>${status.toUpperCase()}</strong>.</p>
+        <p>Thank you for shopping with GURUTECH!</p>
+      `
+    });
+  } catch (err) { console.error('Email failed:', err); }
+}
 
 router.get('/dashboard', verifyAdmin, async (req, res) => {
   const today = new Date();
@@ -79,10 +106,17 @@ router.post('/products/bulk-update', verifyAdmin, requireRole('superadmin'), asy
 router.post('/orders/bulk-status', verifyAdmin, async (req, res) => {
   const { orderNumbers, status } = req.body;
   if (!Array.isArray(orderNumbers) || !status) return res.status(400).json({ success: false, error: 'orderNumbers and status required' });
+  
+  const orders = await Order.find({ number: { $in: orderNumbers } });
+  
   const result = await Order.updateMany(
     { number: { $in: orderNumbers } },
     { status, updatedAt: new Date() }
   );
+
+  // Send emails to all affected customers
+  orders.forEach(order => sendStatusEmail(order, status));
+
   res.json({ success: true, updated: result.modifiedCount });
 });
 
